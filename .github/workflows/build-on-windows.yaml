@@ -1,0 +1,15 @@
+name: Build on windows
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: numworks/setup-msys2@v1
+      with:
+        path-type: inherit
+        msystem: MSYS
+    - uses: actions/checkout@v2
+    - run: msys2do bash configure --enable-static --disable-shared --without-zlib --without-threads --without-jpeg --without-tiff
+    - run: msys2do make
